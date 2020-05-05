@@ -1,0 +1,79 @@
+group 'area'
+version 'area'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+group 'Jarea'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'ear'
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // The following dependencies will be the ear modules and
+    // will be placed in the ear root
+    // deploy project(':war')
+
+    // The following dependencies will become ear libs and will
+    // be placed in a dir configured via the libDirName property
+    // earlib group: 'log4j', name: 'log4j'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.json', name: 'json', version: '20090211'
+// https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-moxy
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-common', version: '2.25'
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.25'
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.25'
+    // https://mvnrepository.com/artifact/com.owlike/genson
+    compile group: 'com.owlike', name: 'genson', version: '1.4'
+    compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.25'
+    compile group: 'asm', name: 'asm', version: '3.3.1'
+    compile group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '7.0.28'
+    compile group: 'org.facebook4j', name: 'facebook4j-core', version: '2.4.10'
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-gmail:v1-rev72-1.23.0'
+    compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0'
+    compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.6'
+    compile group: 'org.twitter4j', name: 'twitter4j-stream', version: '4.0.6'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.8-dmr'
+    compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.25'
+    compile group: 'com.dropbox.core', name: 'dropbox-core-sdk', version: '3.0.5'
+}
+
+ear {
+    appDirName 'src/main/app'  // use application metadata found in this folder
+    // put dependent libraries into APP-INF/lib inside the generated EAR
+    libDirName 'APP-INF/lib'
+    deploymentDescriptor {  // custom entries for application.xml:
+//      fileName = "application.xml"  // same as the default value
+//      version = "6"  // same as the default value
+//      applicationName = "customear"
+        initializeInOrder = true
+//      displayName = "Custom Ear"  // defaults to project.name
+        // defaults to project.description if not set
+//      description = "My customized EAR for the Gradle documentation"
+//      libraryDirectory = "APP-INF/lib"  // not needed, above libDirName setting does this
+//      module("my.jar", "java")  // won't deploy as my.jar isn't deploy dependency
+//      webModule("my.war", "/")  // won't deploy as my.war isn't deploy dependency
+//      securityRole "admin"
+//      securityRole "superadmin"
+    }
+}

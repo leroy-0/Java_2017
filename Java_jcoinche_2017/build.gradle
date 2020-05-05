@@ -1,0 +1,72 @@
+ apply plugin: 'java'
+
+task "package" {
+    dependsOn 'server'
+    dependsOn 'client'
+}
+ task server(type: Jar) {
+     manifest {
+         attributes 'Implementation-Title': 'Gradle Jar File Example',
+                 'Main-Class': 'server.Server'
+     }
+     baseName = project.name + '-server'
+     destinationDir = file("$rootDir/target/")
+     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+     with jar
+ }
+
+            group 'jcoinche'
+
+            apply plugin: 'java'
+
+            sourceCompatibility = 1.8
+
+            repositories {
+                mavenCentral()
+            }
+
+            dependencies {
+                compile group: 'org.apache.mina', name: 'mina-core', version: '2.0.16'
+                compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+                testCompile "junit:junit:4.11"
+            }
+
+ apply plugin: 'java'
+ task client(type: Jar) {
+     manifest {
+         attributes 'Implementation-Title': 'Gradle Jar File Example',
+                 'Main-Class': 'client.GameManager'
+     }
+     baseName = project.name + '-client'
+     destinationDir = file("$rootDir/target/")
+     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+     with jar
+
+ }
+
+ group 'jcoinche'
+
+ apply plugin: 'java'
+
+ sourceCompatibility = 1.8
+
+ repositories {
+     mavenCentral()
+ }
+
+
+ task tests(type: Exec) {
+     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+         commandLine 'C:\\Windows\\System32\\bash', './connect_to_server.sh'
+     } else {
+         commandLine './connect_to_server.sh'
+     }
+ }
+
+ task cover(type: Exec) {
+     if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+         commandLine 'C:\\Windows\\System32\\bash', './cover.sh'
+     } else {
+         commandLine './cover.sh'
+     }
+ }
